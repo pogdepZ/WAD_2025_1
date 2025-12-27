@@ -254,7 +254,7 @@ export default function MenuManagement() {
       // Gọi API upload (Lưu ý: api.js phải hỗ trợ multipart, hoặc gọi axios trực tiếp)
       // Cách nhanh nhất là dùng axios trực tiếp ở đây để tránh config header phức tạp
       const res = await axios.post(
-        "http://localhost:5000/api/upload",
+        `${import.meta.env.VITE_API_URL}/api/upload`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import toast, { Toaster } from "react-hot-toast";
 import api from "../../services/api";
 
-const socket = io("http://localhost:5000");
+const socket = io(import.meta.env.VITE_API_URL);
 
 export default function KitchenDashboard() {
   const [orders, setOrders] = useState([]);
