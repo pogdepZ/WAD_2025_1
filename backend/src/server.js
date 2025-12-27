@@ -64,7 +64,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/staff', require('./routes/staffRoutes'));
 app.use('/api/modifiers', require('./routes/modifierRoutes'));
-app.use('/api/upload', require('./routes/uploadRoutes'));
+app.use('/upload', require('./routes/uploadRoutes'));
 
 
 
