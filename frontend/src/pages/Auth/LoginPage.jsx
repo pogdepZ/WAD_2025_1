@@ -14,6 +14,9 @@ export default function LoginPage() {
     try {
       const res = await authService.login(data);
       
+      // 1. Debug: Xem Backend trả về cái gì
+      console.log("Login Response:", res.data); 
+
       // Lưu token vào Session Storage
       sessionStorage.setItem('token', res.data.token);
       sessionStorage.setItem('user', JSON.stringify(res.data.user));
