@@ -14,8 +14,8 @@ const api = axios.create({
 // 3. Tự động gắn Token vào mọi request (QUAN TRỌNG CHO ADMIN)
 api.interceptors.request.use(
   (config) => {
-    // Lấy token từ sessionStorage (vì ở bước trước ta đã chốt dùng sessionStorage)
-    const token = sessionStorage.getItem("token");
+    // Lấy token từ localStorage (vì ở bước trước ta đã chốt dùng localStorage)
+    const token = localStorage.getItem("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

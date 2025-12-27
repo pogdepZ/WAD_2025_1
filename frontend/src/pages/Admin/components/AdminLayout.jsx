@@ -8,7 +8,7 @@ export default function AdminLayout() {
 
   const handleLogout = () => {
     if (window.confirm("Bạn có chắc muốn đăng xuất?")) {
-      sessionStorage.clear();
+      localStorage.clear();
       navigate("/login");
     }
   };
@@ -19,7 +19,7 @@ export default function AdminLayout() {
     { path: "/admin/menu", label: "Quản lý Menu" },
     { path: "/admin/staff", label: "Nhân viên" },
     { path: "/admin/categories", label: "Danh Mục" },
-    { path: "/admin/modifiers", label: "Danh mục món" }, 
+    { path: "/admin/modifiers", label: "Danh mục món" },
   ];
 
   return (
