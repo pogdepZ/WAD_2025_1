@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 1. Global Reset */
+body {
+  @apply bg-bg text-dark font-sans antialiased;
+}
+
+/* 2. Custom Scrollbar (Cho đẹp giống mẫu) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+  background: #bdc3c7; 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6; 
+}
+
+/* 3. Utility Classes từ CSS của bạn (Chuyển sang @apply của Tailwind) */
+
+/* Nút chính */
+.btn-primary {
+  @apply bg-primary text-white font-semibold py-3 px-6 rounded-xl shadow transition-colors hover:bg-primary-dark disabled:opacity-70 disabled:cursor-not-allowed;
+}
+
+/* Nút phụ */
+.btn-secondary {
+  @apply bg-white text-dark border-2 border-light font-semibold py-2.5 px-5 rounded-xl transition-colors hover:border-primary hover:text-primary;
+}
+
+/* Badge trạng thái */
+.badge {
+  @apply px-3 py-1 rounded-full text-xs font-bold;
+}
+.badge-success { @apply bg-[#d4edda] text-success border border-green-200; }
+.badge-warning { @apply bg-[#fff3cd] text-[#856404] border border-yellow-200; }
+.badge-danger  { @apply bg-[#f8d7da] text-danger border border-red-200; }
+.badge-gray { 
+  @apply bg-[#f3f4f6] text-[#4b5563] border border-[#e5e7eb]; 
+}
+/* 4. CSS In Ấn (Native Print) - GIỮ NGUYÊN CÁI NÀY ĐỂ KHÔNG BỊ LỖI IN */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .print-content, .print-content * {
+    visibility: visible !important;
+  }
+
+  .print-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+  
+  /* Căn giữa trang in */
+  @page { 
+    margin: 0; 
+    size: auto; 
+  }
+  body {
+    background-color: white;
+  }
+}
