@@ -8,6 +8,12 @@ class UserRepository {
   async findById(id) {
     return db('users').where({ id }).first();
   }
+
+  // Hàm để lưu user vào DB
+  async create(userData) {
+    const [newUser] = await db('users').insert(userData).returning('*');
+    return newUser;
+  }
 }
 
 module.exports = new UserRepository();

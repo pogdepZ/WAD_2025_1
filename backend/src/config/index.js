@@ -15,7 +15,7 @@ const config = {
 
   // Cấu hình Bảo mật/JWT
   auth: {
-    jwtSecret: process.env.JWT_SECRET || 'fallback_secret_dont_use_in_prod',
+    jwtSecret: process.env.JWT_SECRET || 't5q0weiAdGEaitL5c3qYyNayONPPPNiJmmQauToR',
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
     saltRounds: 10,
   },

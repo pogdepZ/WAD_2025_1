@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('./config'); // Tự động lấy file index.js
 const cors = require('cors');
+const authMiddleware = require('./middlewares/authMiddleware');
 
 
 // Routes
@@ -13,6 +14,10 @@ app.use(cors({ origin: config.frontendUrl })); // Dùng URL từ config
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
+
+app.get('/api/test-secure', authMiddleware, (req, res) => {
+    res.json({ message: "Bạn đã vào được vùng bảo mật!", userId: req.user.id });
+});
 
 app.listen(config.port, () => {
   console.log(`🚀 Server đang chạy tại: http://localhost:${config.port}`);

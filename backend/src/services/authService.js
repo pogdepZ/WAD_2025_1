@@ -28,6 +28,28 @@ class AuthService {
     const { password: _, ...userWithoutPassword } = user;
     return { user: userWithoutPassword, token };
   }
+
+  async register(fullName, email, password) {
+    // 1. Kiểm tra email đã tồn tại chưa
+    const existingUser = await userRepository.findByEmail(email);
+    if (existingUser) {
+      throw new Error('Email này đã được sử dụng');
+    }
+
+    // 2. Mã hóa mật khẩu
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 3. Lưu vào database
+    const newUser = await userRepository.create({
+      full_name: fullName,
+      email: email,
+      password: hashedPassword,
+      role: 'admin' // Mặc định người đăng ký đầu tiên là admin
+    });
+
+    const { password: _, ...userWithoutPassword } = newUser;
+    return userWithoutPassword;
+  }
 }
 
 module.exports = new AuthService();

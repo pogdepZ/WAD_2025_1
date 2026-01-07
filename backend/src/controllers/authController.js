@@ -19,6 +19,16 @@ class AuthController {
       return res.status(401).json({ message: error.message });
     }
   }
+
+  async register(req, res) {
+    try {
+      const { fullName, email, password } = req.body;
+      const user = await authService.register(fullName, email, password);
+      res.status(201).json({ message: 'Tạo tài khoản thành công', user });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = new AuthController();
