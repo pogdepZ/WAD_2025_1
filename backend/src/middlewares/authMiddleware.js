@@ -1,23 +1,37 @@
 const jwt = require('jsonwebtoken');
-const config = require('../config');
 
-module.exports = (req, res, next) => {
-  // 1. Lấy token từ header "Authorization: Bearer <token>"
-  const authHeader = req.header('Authorization');
-  const token = authHeader && authHeader.split(' ')[1];
+// Middleware kiểm tra Token
+exports.protect = (req, res, next) => {
+  let token;
 
-  if (!token) {
-    return res.status(401).json({ message: 'Bạn chưa đăng nhập (Thiếu token)' });
+  // 1. Lấy token từ header (Authorization: Bearer <token>)
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+
+      // 2. Giải mã token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // 3. Lưu thông tin user vào req để dùng ở bước sau
+      req.user = decoded;
+      
+      next(); // Cho phép đi tiếp
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: 'Token không hợp lệ, vui lòng đăng nhập lại' });
+    }
   }
 
-  try {
-    // 2. Xác thực token
-    const decoded = jwt.verify(token, config.auth.jwtSecret);
-    
-    // 3. Lưu thông tin user đã decode vào đối tượng req để các hàm sau sử dụng
-    req.user = decoded; 
-    next(); // Cho phép đi tiếp vào Controller
-  } catch (error) {
-    res.status(401).json({ message: 'Token không hợp lệ hoặc đã hết hạn' });
+  if (!token) {
+    res.status(401).json({ message: 'Bạn chưa đăng nhập, không có quyền truy cập' });
+  }
+};
+
+// Middleware kiểm tra quyền Admin
+exports.adminOnly = (req, res, next) => {
+  if (req.user && req.user.role === 'admin') {
+    next();
+  } else {
+    res.status(403).json({ message: 'Chỉ Admin mới có quyền thực hiện thao tác này' });
   }
 };
