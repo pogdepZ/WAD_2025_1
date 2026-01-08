@@ -1,4 +1,4 @@
-const prisma = require("../config/db");
+const db = require("../config/db");
 const jwt = require("jsonwebtoken");
 const QRCode = require("qrcode");
 const archiver = require("archiver");
@@ -141,6 +141,19 @@ exports.updateTableStatus = async (req, res) => {
     res.json(updatedTable);
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+// 3. Xóa bàn (Soft Delete hoặc Hard Delete tùy yêu cầu)
+// Ở đây làm Hard Delete cho đơn giản, nếu bàn đang có order thì DB sẽ báo lỗi khóa ngoại
+exports.deleteTable = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.query('DELETE FROM tables WHERE id = $1', [id]);
+    res.json({ message: 'Xóa bàn thành công' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Lỗi Server (Có thể bàn đang có đơn hàng)' });
   }
 };
 

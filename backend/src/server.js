@@ -5,6 +5,7 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/authRoutes');
 const menuRoutes = require('./routes/menuRoutes');
+const tableRoutes = require('./routes/tableRoutes');
 
 const app = express();
 
@@ -15,8 +16,8 @@ app.use(morgan('dev')); // Log request
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/menu', menuRoutes); // 
-
+app.use('/api/menu', menuRoutes);
+app.use('/api/tables', tableRoutes);
 // Test Route
 app.get('/', (req, res) => {
   res.json({ message: 'Smart Restaurant API (Single Tenant) is running...' });
